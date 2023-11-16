@@ -33,7 +33,14 @@ async function run() {
 
 
         // -------------------------------------------Courses------------------------------------------------------
-        app.get('/courses', async (req, res) => {
+        app.get('/courses/:id', async (req, res) => {
+            const category = req.params.id;
+            const filter = { courseCategory: category };
+            const result = await courseCollection.find(filter).toArray();
+            res.send(result);
+        })
+
+        app.get('/all_courses', async (req, res) => {
             const cursor = courseCollection.find();
             const result = await cursor.toArray();
             res.send(result);
